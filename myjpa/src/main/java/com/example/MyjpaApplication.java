@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class MyjpaApplication {
 	
-	private Date getExpirationDate(int days) {
+	public static Date getExpirationDate(int days) {
 		Calendar cday = Calendar.getInstance();
 		cday.add(Calendar.DATE, days); 
 		return cday.getTime();
