@@ -24,13 +24,13 @@ public class Notificator {
 		eventBus.notify(EXPIRED_EVENT, Event.wrap(item.toString()));
 
 		long elapsed = System.currentTimeMillis() - start;
-		logger.info("Elapsed time: " + elapsed + "ms");
+		logger.info("publish Item Expiration elapsed time: " + elapsed + "ms");
 	}
 	public void publishItemRemoved(Item item) throws InterruptedException {
 		long start = System.currentTimeMillis();
 		eventBus.notify(REMOVED_EVENT, Event.wrap(item.toString()));
 
 		long elapsed = System.currentTimeMillis() - start;
-		logger.info("Elapsed time: " + elapsed + "ms");
+		logger.info("publish Item Removed elapsed time: " + elapsed + "ms");
 	}
 }

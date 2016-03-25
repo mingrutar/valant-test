@@ -30,9 +30,7 @@ import org.apache.log4j.Logger;
 public class ValantController {
 	static Logger logger = Logger.getLogger(ValantController.class.getName());
 	private InventoryRepository inventoryRepository;
-	@Autowired 
 	private Notificator notificater;
-
 
 	@Autowired
 	ValantController(InventoryRepository inventoryRepository, Notificator notificater) {
