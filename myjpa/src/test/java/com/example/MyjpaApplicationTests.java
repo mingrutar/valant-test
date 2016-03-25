@@ -25,6 +25,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.example.model.InventoryRepository;
+import com.example.model.Item;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MyjpaApplication.class)
 @WebAppConfiguration
@@ -70,16 +73,13 @@ public class MyjpaApplicationTests {
     @Test
     public void deleteItem() throws Exception {
         String itemJson = json(new Item("newLabel", MyjpaApplication.getExpirationDate(2), "newType") );
-        this.mockMvc.perform(delete("/"+label)
-                .contentType(contentType))
+        this.mockMvc.perform(delete("/"+label))
                 .andExpect(status().isNoContent());
     	
     }
     @Test
     public void labelNotFoundException() throws Exception {
-        mockMvc.perform(delete("/badLabel")
-                .content(this.json(new Item()))
-                .contentType(contentType))
+        mockMvc.perform(delete("/badLabel"))
                 .andExpect(status().isNotFound());
     }
     protected String json(Object o) throws IOException {
