@@ -34,7 +34,7 @@ public class NotificatorTest {
     	mockEventBus = mock(EventBus.class);
     	item = new Item("label1", new Date(), "type1");
     }
-// Cannot make Mockito verify work with generic.
+// TODO: Cannot make Mockito to verify generic type.
 //    
 //	@Test
 //	public void testPublishItemExpiration() throws InterruptedException {
