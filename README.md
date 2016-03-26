@@ -1,12 +1,12 @@
 ========== Assignment ==========
 Write an Inventory System that provides add and delete API.
 
-==========  Solution  ========== 
+==========  Solution  ==========
 The framework:
-   Built the system using Spring boot framework with Java 1.8.  
+   Built the system using Spring boot framework with Java 1.8.
 
 To download from github: 
-   git clone https://github.com/prirodancoder/valant-test.git  
+   git clone https://github.com/prirodancoder/valant-test.git
  
 To launch:
  cd myjpa
@@ -14,7 +14,7 @@ To launch:
 
   @ I am able to launch it at my Windows git terminal. if you have trouble to launch, please let me know and please provide detailed steps.
 
- To verufy: 
+ To verufy:
     View in a browser with uri 'http://127.0.0.1:8080/' 
       it returns a empty json array if you have not add an item. 
       If you like see some recorde at start, modify src/main/resources/application.properties file 'seedDatabase = false' to 'seedDatabase = true'. You will see 3 pre seeded records.
