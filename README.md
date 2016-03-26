@@ -1,11 +1,11 @@
 ========== Assignment ==========
 Write an Inventory Syste that provides add and delete API.
 
-========== Solution =========+
-Framework:
+==========  Solution  ==========
+The framework:
    Built the system using Spring boot framework with Java 1.8. 
 
-To download from github
+To download from github:
    git clone https://github.com/prirodancoder/valant-test.git 
  
 To launch:
@@ -25,7 +25,7 @@ To add an item, at terminal run:
 To delete an item, at terminal run:
     curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/Label1
 
-Project layout
+Project layout:
  src/main                           // root for production code
   |_java                            // root for java code
       com.mingvalant                // package name
