@@ -5,7 +5,7 @@ Write an Inventory System that provides add and delete API.
 The framework:
    Built the system using Spring boot framework with Java 1.8.
 
-To download from github: 
+To download from github:
    git clone https://github.com/prirodancoder/valant-test.git
  
 To launch:
@@ -57,7 +57,7 @@ Project layout:
          NotificatorTest            // uses mockito framework.
 
     @ The design follows spring paradiagm. 
-    
+
 TODO and discussion:
 1) currently the JSON for Expiration is in epoch format. Would be nice if it is in a more user friendly format. But on the other hands, this is a backend server, the front app should easily convert user-friendly date format to epoch.
 2) two tests in NotificatorTest failed due to mockito verify not accept generic class type. Need more research on that.
