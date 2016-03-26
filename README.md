@@ -1,12 +1,8 @@
 ========== Assignment ==========
-
 Write an Inventory Syste that provides add and delete API.
 
-
 ==========  Solution  ==========
-
 The framework:
-
    Built the system using Spring boot framework with Java 1.8. 
 
 To download from github:
@@ -31,7 +27,7 @@ To delete an item, at terminal run:
 
 Project layout:
  src/main                           // root for production code
-  |_java                            // root for java code
+ |_java                            // root for java code
       com.mingvalant                // package name
        | - MyjpaApplication.jave    // spring Application. 
                                        It registeres event receiver and shut it when app is shutdown
