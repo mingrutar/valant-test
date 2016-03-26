@@ -1,4 +1,5 @@
 ========== Assignment ==========
+
 Write an Inventory Syste that provides add and delete API.
 
 ==========  Solution  ==========
