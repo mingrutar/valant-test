@@ -1,8 +1,12 @@
 ========== Assignment ==========
+
 Write an Inventory Syste that provides add and delete API.
 
+
 ==========  Solution  ==========
+
 The framework:
+
    Built the system using Spring boot framework with Java 1.8. 
 
 To download from github:
