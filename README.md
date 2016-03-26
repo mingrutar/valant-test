@@ -1,20 +1,19 @@
 ========== Assignment ==========
 Write an Inventory Syste that provides add and delete API.
-
-========== Solution ==========
+========== Solution =========+
 Framework:
-    Built the system using Spring boot framework with Java 1.8. 
+   Built the system using Spring boot framework with Java 1.8. 
 
 To download from github
-    git clone https://github.com/prirodancoder/valant-test.git 
+   git clone https://github.com/prirodancoder/valant-test.git 
  
 To launch:
-    cd myjpa
+ cd myjpa
     ./mvnw deploy
   * I am able to launch it at my Windows git terminal. if you have trouble to launch, please let me know and please 
     provide detailed steps.
-    
-To verufy: 
+
+ To verufy: 
 	View in a browser with uri 'http://127.0.0.1:8080/'
 	  it returns a empty json array if you have not add an item.
 	  If you like see some recorde at start, modify src/main/resources/application.properties file 'seedDatabase = false' to 'seedDatabase = true'. You will see 3 pre seeded records.
@@ -26,7 +25,7 @@ To delete an item, at terminal run:
  	curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/Label1
 
 Project layout
- src/main						 	// root for production code
+ src/main							// root for production code
   |_java 							// root for java code
 	  com.mingvalant 				// package name
 	   | - MyjpaApplication.jave	// spring Application. 
@@ -58,7 +57,7 @@ Project layout
 
  * The design follows spring paradiagm. 
 	
-TODO and discussion: 
+TODO and discussion:
 1) currently the JSON for Expiration is in epoch format. Would be nice if it is in a more user friendly format. But on the other hands, this is a backend server, the front app should easily convert user-friendly date format to epoch.
 2) two tests in NotificatorTest failed due to mockito verify not accept generic class type. Need more research on that.
 3) Security. this system let user modify records in the database. It should implement authorization and authentication mechanisms. Due to time constrain, I skipped security.
