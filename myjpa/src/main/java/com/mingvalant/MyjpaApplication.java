@@ -35,9 +35,14 @@ import static reactor.bus.selector.Selectors.$;
 public class MyjpaApplication implements CommandLineRunner {
 	static Logger logger = Logger.getLogger(MyjpaApplication.class.getName());
 	
-	public static Date getExpirationDate(int days) {
+	public static Date getExpirationDateinDays(int days) {
 		Calendar cday = Calendar.getInstance();
 		cday.add(Calendar.DATE, days); 
+		return cday.getTime();
+	}
+	public static Date getExpirationDateinSec(int sec) {
+		Calendar cday = Calendar.getInstance();
+		cday.add(Calendar.SECOND, sec); 
 		return cday.getTime();
 	}
 	/**
@@ -47,9 +52,13 @@ public class MyjpaApplication implements CommandLineRunner {
 	@ConditionalOnProperty(name = "seedDatabase", matchIfMissing = false)
 	public InitializingBean seedDB(InventoryRepository ir) {
 		return ()-> {
-			ir.save(new Item("Label1", getExpirationDate(-1), "Type_1"));
-			ir.save(new Item("Label2", getExpirationDate(10), "Type_2"));
-			ir.save(new Item("Label3", getExpirationDate(4), "Type_3"));
+			ir.save(new Item("Label1", getExpirationDateinDays(-1), "Type_1"));		//yesterday
+			ir.save(new Item("Label2", getExpirationDateinDays(1), "Type_2"));		//tomorrow
+			ir.save(new Item("Label3", getExpirationDateinDays(10), "Type_3"));		//10 days later
+			
+			ir.save(new Item("Label4", getExpirationDateinSec(0), "Type_4"));		//now
+			ir.save(new Item("Label5", getExpirationDateinSec(1), "Type_5"));		//next sec
+			ir.save(new Item("Label6", getExpirationDateinSec(-10), "Type_6"));		//10 secago
 		};
 	}
 	/**
