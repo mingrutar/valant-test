@@ -17,7 +17,7 @@ public class SimpleReceiver implements Consumer<Event<String>> {
 		if (okey instanceof String) {
 			String key = (String) okey;
 			String messsage = event.getData();
-			logger.info(String.format("SimpleReceiver received event %s: %s", key, messsage));
+			logger.info(String.format("=>SimpleReceiver received an EVENT %s: %s", key, messsage));
 		} else {
 			logger.warn("Event consumer received an unknown event");
 		}

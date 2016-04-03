@@ -67,7 +67,7 @@ public class ValantController {
 			result = optional.get();
 			logger.info(String.format("Item already exist. Ignored the item for saving.", input.toString()));
 		} else {
-			this.inventoryRepository.save(input);
+			result = this.inventoryRepository.save(input);
 			logger.info("Added item: "+ input.toString() );
 		}
 		HttpHeaders httpHeaders = new HttpHeaders();

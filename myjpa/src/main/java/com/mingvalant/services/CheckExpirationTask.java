@@ -20,8 +20,10 @@ public class CheckExpirationTask {
 		this.inventoryRepository = inventoryRepository;
 		this.notificater = notificater;
 	}
-	
-	@Scheduled(fixedRate = 60000)									// in ms		
+	/**
+	 * TODO: scheduled interval is for demo. in real world, the value may need adjusted.
+	 */
+	@Scheduled(fixedRate = 60000)									// in ms,		
 	public void checkExpirationItems() {
 		inventoryRepository.findByExpirationBefore(new Date()).forEach( 
 			(i) -> {try {
