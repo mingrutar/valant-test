@@ -1,16 +1,17 @@
 ---- 4/2/2016 update  ----
 1) change the behavior of adding item: 
- if item not exist, add it. The following is the command and output in log:
+ a) if item not exist, add it and return HTTP status CREATED. The following is the command and output in log:
 	curl -H "Content-Type: application/json" -X POST -d '{"label":"label20","expiration":234567,"type":"A"}' http://localhost:8080/
 	in log: 2016-04-02 17:06:08.189  INFO 5812 --- [nio-8080-exec-3] c.m.controller.ValantController          : Added item: Item [id=7, label=label20, expiration=Wed Dec 31 16:03:54 PST 1969, type=A]
- if the item exist, ignore the item. The following is the command and output in log:
+ 
+ b) if the item exist, ignore the item and return HTTP status UNPROCESSABLE_ENTITY. The following is the command and output in log:
 	curl -H "Content-Type: application/json" -X POST -d '{"label":"label2","expiration":234567,"type":"A"}' http://localhost:8080/
 	2016-04-02 17:07:16.753  INFO 5812 --- [nio-8080-exec-5] c.m.controller.ValantController          : Item already exist. Ignored the item for saving.
 
 2) the notification is built on Spring EventBus. Currently, the receiver (see SimpleReceiver.java) writes a message to the log. 
    Next item illustrates the details of how to verify expiration notifications.
 
-3) expiration case for testing without waiting:
+3) for testing expiration without waiting:
    in src/main/resources/application.properties: change 'seedDatabase = false' => 'seedDatabase = true'. 
     This will seed 4 items to the inventory db by executing MyjpaApplication::seedDB(InventoryRepository ir):
 		a) Item("Label1", getExpirationDate(-1), "Type_1");		//yesterday
@@ -24,7 +25,9 @@
 		2016-04-02 18:01:17.374  INFO 9516 --- [dPoolExecutor-2] com.mingvalant.services.SimpleReceiver   : =>SimpleReceiver received an EVENT expired: Item [id=3, label=Label4, expiration=2016-03-31 18:01:16.262, type=Type_4]
     * note: because the requirement does not ask to remove the expired items, so the messages continue. 
       For illustration, the schedule task duration is very short.
-    
+4) Add unit test for adding duplicated item. 
+5) Removed unit test for expirated item - it is wrong since the expired item is not removed.
+
 ========== Assignment ==========
 Write an Inventory System that provides add and delete API.
 

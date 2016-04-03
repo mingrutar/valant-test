@@ -53,8 +53,8 @@ public class ValantController {
 	/**
 	 * TODO: Is this a desirable behavior?
 	 * Check if inventory repository contains the label of item for save. 
-	 *   if not, we save the item and return the save item back to the caller
-	 *   if yes, we ignore the item and return the item in inventory back to the caller.
+	 *   if not, we save the item and return HTTP status CREATED.
+	 *   if yes, we ignore the item and return HTTP status UNPROCESSABLE_ENTITY.
 	 * 
 	 * to test:
 	 *   curl -H "Content-Type: application/json" -X POST -d '{"label":"xyz","expiration":234567,"type":"A"}' http://localhost:8080/
@@ -63,18 +63,22 @@ public class ValantController {
 	ResponseEntity<?> add(@RequestBody Item input) {
 		Optional<Item> optional = this.inventoryRepository.findByLabelIgnoreCase(input.getLabel());
 		Item result= null;
+		HttpStatus httpStatus = null;
+		
 		if (optional.isPresent()) {
 			result = optional.get();
 			logger.info(String.format("Item already exist. Ignored the item for saving.", input.toString()));
+			httpStatus = HttpStatus.UNPROCESSABLE_ENTITY;		// or HttpStatus.CONFLICT; ?
 		} else {
 			result = this.inventoryRepository.save(input);
 			logger.info("Added item: "+ input.toString() );
+			httpStatus = HttpStatus.CREATED;
 		}
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setLocation(ServletUriComponentsBuilder
 				.fromCurrentRequest().path("/")
 				.buildAndExpand(result.getId()).toUri());
-		return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+		return new ResponseEntity<>(null, httpHeaders, httpStatus);
 	}
 	/*
 	 * curl -i -H "Accept: application/json" -X DELETE http://localhost:8080/Label1 

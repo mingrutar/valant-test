@@ -2,8 +2,10 @@ package com.mingvalant;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -84,21 +86,26 @@ public class MyjpaApplicationTests {
         String itemJson = json(new Item("newLabel", MyjpaApplication.getExpirationDate(2), "newType") );
         this.mockMvc.perform(delete("/"+label))
                 .andExpect(status().isNoContent());
-    	
-    }
-    @Test
-    public void expiredItem() throws Exception {
-        Item item = new Item("newLabe2", MyjpaApplication.getExpirationDate(0), "newType");
-        String itemJson = json(item );
-        ResultActions ret = this.mockMvc.perform(post("/")
-                .contentType(contentType)
-                .content(itemJson));
-        Thread.sleep(60010);
-        this.mockMvc.perform(post("/"+label))
-                .andExpect(status().isNoContent());
-        
     }
 
+    /*
+     *  add the item twice.
+     */
+    @Test
+    public void createDuplicatedItem() throws Exception {
+        Item item = new Item("newLabel", MyjpaApplication.getExpirationDate(2), "newType");
+        String itemJson = json(item );
+        this.mockMvc.perform(post("/")
+                .contentType(contentType)
+                .content(itemJson))
+                .andExpect(status().isCreated());
+        
+        this.mockMvc.perform(post("/")
+                .contentType(contentType)
+                .content(itemJson))
+                .andExpect(status().isUnprocessableEntity());
+    }
+    
     @Test
     public void labelNotFoundException() throws Exception {
         mockMvc.perform(delete("/badLabel"))
