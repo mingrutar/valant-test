@@ -11,8 +11,9 @@
 2) the notification is built on Spring EventBus. Currently, the receiver (see SimpleReceiver.java) writes a message to the log. 
    Next item illustrates the details of how to verify expiration notifications.
 
-3) for testing expiration without waiting:
+3) for testing expiration without waiting, checkout branch 'fixIssues' or 
    in src/main/resources/application.properties: change 'seedDatabase = false' => 'seedDatabase = true'. 
+   this will enable seeding.
     This will seed 4 items to the inventory db by executing MyjpaApplication::seedDB(InventoryRepository ir):
 		a) Item("Label1", getExpirationDate(-1), "Type_1");		//yesterday
 		b) Item("Label2", getExpirationDate(1), "Type_2");		//tomorrow
@@ -24,7 +25,8 @@
 		2016-04-02 18:01:17.371  INFO 9516 --- [dPoolExecutor-1] com.mingvalant.services.SimpleReceiver   : =>SimpleReceiver received an EVENT expired: Item [id=1, label=Label1, expiration=2016-04-01 18:01:16.18, type=Type_1]
 		2016-04-02 18:01:17.374  INFO 9516 --- [dPoolExecutor-2] com.mingvalant.services.SimpleReceiver   : =>SimpleReceiver received an EVENT expired: Item [id=3, label=Label4, expiration=2016-03-31 18:01:16.262, type=Type_4]
     * note: because the requirement does not ask to remove the expired items, so the messages continue. 
-      For illustration, the schedule task duration is very short.
+    * For illustration, the schedule task duration is very short.
+
 4) Add unit test for adding duplicated item. 
 5) Removed unit test for expirated item - it is wrong since the expired item is not removed.
 
