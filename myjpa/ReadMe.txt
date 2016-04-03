@@ -1,4 +1,8 @@
----- 4/2/2016 update  ----
+---- 4/3/2016 add gradle ----
+./gradlew build			//for build
+./gradlew bootRun       //to run the rest server
+
+---- 4/2/2016 fix github issues  ----
 1) change the behavior of adding item: 
  a) if item not exist, add it and return HTTP status CREATED. The following is the command and output in log:
 	curl -H "Content-Type: application/json" -X POST -d '{"label":"label20","expiration":234567,"type":"A"}' http://localhost:8080/
