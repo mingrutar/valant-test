@@ -1,3 +1,8 @@
+---- 4/3/2016 fixed unit tests ----
+Mockito mock does not seem working with generic types. Mofidied the 
+event notification unit tests to verify the output written by the notification 
+receiver, since this receiver just write a message to the log when it is notified.
+
 ---- 4/3/2016 add gradle ----
 ./gradlew build			//for build
 ./gradlew bootRun       //to run the rest server
@@ -96,10 +101,10 @@ Project layout:
 
 TODO and discussion:
 1) currently the JSON for Expiration is in epoch format. Would be nice if it is in a more user friendly format. But on the other hands, this is a backend server, the front app should easily convert user-friendly date format to epoch.
-2) two tests in NotificatorTest failed due to mockito verify not accept generic class type. Need more research on that.
+2) Done: two tests in NotificatorTest failed due to mockito verify not accept generic class type. Need more research on that.
 3) Security. this system let user modify records in the database. It should implement authorization and authentication mechanisms. Due to time constrain, I skipped security.
 4) more unit tests
-5) provide gradle scripts ( yet to learn)
+5) Done: provide gradle scripts ( yet to learn)
 
 If you have any questions, please let me know. 
 Thank you for reading my code!
