@@ -1,59 +1,52 @@
 package com.mingvalant.services;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.Assert.assertThat;
 
 import java.security.InvalidParameterException;
 import java.util.Date;
 
-import static org.junit.Assert.*;
-
-import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.OutputCapture;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.mingvalant.MyjpaApplication;
 import com.mingvalant.model.Item;
-import com.mingvalant.services.Notificator;
 
-import reactor.bus.Event;
 import reactor.bus.EventBus;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = MyjpaApplication.class)
 public class NotificatorTest {
-	EventBus mockEventBus;
-	Item item;
+	@Autowired
+	EventBus eventBus;
 	
-    @Before
-    public void setup() throws Exception {
-    	mockEventBus = mock(EventBus.class);
-    	item = new Item("label1", new Date(), "type1");
-    }
-// TODO: Cannot make Mockito to verify generic type.
-//    
-//	@Test
-//	public void testPublishItemExpiration() throws InterruptedException {
-//		Notificator target = new Notificator(mockEventBus);
-//		target.publishItemExpiration(item);
-//		
-//		verify(mockEventBus).notify(Notificator.EXPIRED_EVENT, any(Even.class));
-//	}
-//
-//	@Test
-//	public void testPublishItemRemoved()  throws InterruptedException {
-//		Notificator target = new Notificator(mockEventBus);
-//		target.publishItemRemoved(item);
-//		verify(mockEventBus).notify(Notificator.REMOVED_EVENT, any(Even.class));
-//	}
+	@Rule
+	public OutputCapture capture = new OutputCapture();
+	
+	@Test
+	public void testExpiredNotification() throws InterruptedException {
+		Item item = new Item("labelExpired", new Date(), "typeExpired");
+		Notificator target = new Notificator(eventBus);
+		target.publishItemExpiration(item);
+		assertThat(capture.toString(), containsString("<=Notificator sent an expiration EVENT for item "+item.getLabel()));
+	}
+
+	@Test
+	public void testRemoveNotification() throws InterruptedException {
+		Item item = new Item("labelRemove", new Date(), "typeRemove");
+		Notificator target = new Notificator(eventBus);
+		target.publishItemRemoved(item);
+		assertThat(capture.toString(), containsString("<=Notificator sent a removed EVENT for item "+item.getLabel()));
+	}
+
 	@Test(expected=InvalidParameterException.class)
 	public void testPublishItemRemovedWithNull()  throws InterruptedException {
-		Notificator target = new Notificator(mockEventBus);
+		Notificator target = new Notificator(eventBus);
 		target.publishItemRemoved(null);
-		verify(mockEventBus).notify(Notificator.REMOVED_EVENT, any(Event.class));
+		System.out.println("Should not get to here");
 	}
 }
